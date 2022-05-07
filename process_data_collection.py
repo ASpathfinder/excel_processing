@@ -1,4 +1,5 @@
 from excel import load_excel
+from util import check_str
 import pandas as pd
 import numpy as np
 import re
@@ -18,22 +19,22 @@ def generate_orm(df, tablename=''):
         default = ""
         auto_increment = ""
         doc = item['备注描述'].strip() if item['备注描述'] else ''
-        if item['键约束'].strip() == '索引键':
+        if check_str(item['键约束']) == '索引键':
             index = 'index=True'
-        elif item['键约束'].strip() == '主键':
+        elif check_str(item['键约束']) == '主键':
             primary = 'primary_key=True'
-        elif item['键约束'].strip() == '联合主键':
+        elif check_str(item['键约束']) == '联合主键':
             primary = 'primary_key=True'
             primary_cols.append("'{}'".format(item['字段名称']))
 
-        if item['唯一约束'].strip() == '单字段':
+        if check_str(item['唯一约束']) == '单字段':
             unique = 'unique=True'
-        elif item['唯一约束'].strip() == '多字段':
+        elif check_str(item['唯一约束']) == '多字段':
             unique_cols.append("'{}'".format(item['字段名称']))
 
-        if item['默认值'].strip() == '自增':
+        if check_str(item['默认值']) == '自增':
             auto_increment = "autoincrement=True"
-        elif item['默认值']:
+        elif check_str(item['默认值']):
             default = "server_default=text(\"'{}'\")".format(item['默认值'])
 
         chains = []
