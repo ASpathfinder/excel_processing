@@ -55,6 +55,8 @@ def generate_orm(df, tablename=''):
             col_type = 'DECIMAL{}'.format(col_type_len)
         elif item['字段类型'].lower() == 'datetime':
             col_type = 'DateTime'
+        elif item['字段类型'].lower() == 'bool':
+            col_type = 'Boolean'
 
         orm_col = "{0} = Column('{0}', {1}, nullable=False, {2}comment='{3}', doc=\"{4}\")".format(
             item['字段名称'],
@@ -99,14 +101,14 @@ def generate_orm(df, tablename=''):
 
 
 if __name__ == '__main__':
-    file = 'files/data_collection/桥梁检测数据相关表设计.xlsx'
-    sheet = '桥梁检测构件检测记录-媒体数据'
+    file = '/home/kellyalsa/git/excel_processing/instance/files/客户端初始化参数相关表设计.xlsx'
+    sheet = '客户端初始化功能配置参数'
 
     df = load_excel(
         io=file,
         usecols='C:M',
         skiprows=1,
-        nrows=12,
+        nrows=11,
         sheet_name=sheet
     )
 
